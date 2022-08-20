@@ -15,6 +15,12 @@ These terms are used slightly diffrently from the original specification. The re
 
 The original specification does not provide an option to print data-table-records in long CSV style, i.e. each line contains a pair X,Y separated by a separator. However, this format technically fits to XYDATA and XYPOINTS formats if the line break is put after each X,Y pair instead of filling in 80 characters. We find this format useful, so this was added as a feature. 
 
+## Installation
+
+```bash
+pip install git+https://github.com/r-hyperspec/pyspc-write-jdx
+```
+
 ## Examples
 
 ### Simple JDX
