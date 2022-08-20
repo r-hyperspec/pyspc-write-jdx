@@ -421,11 +421,11 @@ class SimpleJDX(BaseJDX):
 
     def __str__(self) -> str:
         headers = super().__str__()
-        return "\n".join([headers, str(self._data_table_record), "##END="])
+        return "\n".join([headers, str(self._data_table_record), "##END=\n"])
 
     def __repr__(self) -> str:
         headers = super().__repr__()
-        return "\n".join([headers, repr(self._data_table_record), "##END="])
+        return "\n".join([headers, repr(self._data_table_record), "##END=\n"])
 
 
 class CompoundJDX(BaseJDX):
@@ -469,10 +469,10 @@ class CompoundJDX(BaseJDX):
         headers = super().__str__()
         blocks = [str(block) for block in self.blocks]
         self.block_count.value = len(blocks)
-        return "\n\n".join([headers, *blocks, "##END="])
+        return "\n\n".join([headers, *blocks, "##END=\n"])
 
     def __repr__(self) -> str:
         headers = super().__repr__()
         blocks = [repr(block) for block in self.blocks]
         self.block_count.value = len(blocks)
-        return "\n\n".join([headers, *blocks, "##END="])
+        return "\n\n".join([headers, *blocks, "##END=\n"])
