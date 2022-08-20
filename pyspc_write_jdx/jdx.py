@@ -391,8 +391,10 @@ class SimpleJDX(BaseJDX):
 
         # Set data records related to the data
         x = self._data_table_record.data[0]
+        y = self._data_table_record.data[1]
         self.firstx.value = kwargs.get("firstx", x[0])
         self.lastx.value = kwargs.get("lastx", x[-1])
+        self.firsty.value = kwargs.get("lastx", y[0])
         self.npoints.value = kwargs.get("npoints", len(x))
 
         if ("xfactor" in kwargs) or ("yfactor" in kwargs):

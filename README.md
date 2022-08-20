@@ -118,6 +118,7 @@ class MyCustomIRSimpleJDX(SimpleJDX):
         'yunits',
         'firstx',
         'lastx',
+        'firsty',
         'xfactor',
         'yfactor',
         'npoints',
