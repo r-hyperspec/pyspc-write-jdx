@@ -241,7 +241,3 @@ class LongDateDataRecord(DataRecord):
     @value.deleter
     def value(self):
         del self._value
-
-
-class TabularSpectralDataRecord(DataRecord):
-    pass
