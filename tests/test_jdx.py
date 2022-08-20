@@ -57,13 +57,15 @@ class SimpleJDXTestCase(TestCase):
 ##XFACTOR= 1
 ##YFACTOR= 1
 ##NPOINTS= 3
+##FIRSTY= 4
 ##ORIGIN= My origin
 ##OWNER= Me
 ##XYPOINTS= (XY..XY)
 1.0000, 4.0000
 2.0000, 5.0000
 3.0000, 6.0000
-##END=""",
+##END=
+""",
         )
 
         jdx.xypoints.single_column = False
@@ -79,11 +81,13 @@ class SimpleJDXTestCase(TestCase):
 ##XFACTOR= 1
 ##YFACTOR= 1
 ##NPOINTS= 3
+##FIRSTY= 4
 ##ORIGIN= My origin
 ##OWNER= Me
 ##XYPOINTS= (XY..XY)
 1.0000, 4.0000 : 2.0000, 5.0000 : 3.0000, 6.0000
-##END=""",
+##END=
+""",
         )
 
         with self.assertWarnsRegex(
@@ -147,5 +151,6 @@ class CompoundJDXTestCase(TestCase):
 
 {jdx_block2.__repr__()}
 
-##END=""",
+##END=
+""",
         )
