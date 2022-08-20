@@ -3,7 +3,13 @@ import warnings
 from copy import copy
 from typing import Any, Dict, List
 
-from .data_records import AFFNDataRecord, DataRecord, StringDataRecord, TextDataRecord
+from .data_records import (
+    AFFNDataRecord,
+    DataRecord,
+    LongDateDataRecord,
+    StringDataRecord,
+    TextDataRecord,
+)
 from .data_table_records import (
     DataTableRecord,
     SequenceDataTableRecord,
@@ -34,11 +40,22 @@ class BaseJDX:
         List[str]
             List of data records of the class, i.e. ['title', 'jcamp_dx', ...]
         """
-        return [
-            dr
-            for dr in self.__class__.__dict__.keys()
-            if isinstance(getattr(self, dr), DataRecord)
+        data_record_attrs = [
+            dr for dr in self.__dir__() if isinstance(getattr(self, dr), DataRecord)
         ]
+
+        try:
+            i0 = data_record_attrs.index("title")
+        except ValueError:
+            raise AssertionError(
+                "'title' is not presented in the list of data records of the class"
+            )
+
+        # If there were some user-defined records before 'title', move them to the end
+        if i0 != 0:
+            data_record_attrs = data_record_attrs[i0:] + data_record_attrs[:i0]
+
+        return data_record_attrs
 
     def _all_data_table_records(self) -> List[str]:
         """Get list of all data table records in the class
@@ -50,7 +67,7 @@ class BaseJDX:
         """
         return [
             dr
-            for dr in self.__class__.__dict__.keys()
+            for dr in self.__dir__()
             if isinstance(getattr(self, dr), DataTableRecord)
         ]
 
@@ -259,7 +276,7 @@ class SimpleJDX(BaseJDX):
         required=True,
         description="Name of owner of a proprietary spectrum. The organization or person named under ##ORIGIN= is responsible for accuracy of this field. If data are copyrighted, this line should read “COPYRIGHT (C) (year) by (name).”",
     )
-    long_date = StringDataRecord(
+    long_date = LongDateDataRecord(
         label="LONG DATE",
         required=False,
         description="Date when the spectrum was measured in the form: YYYY/MM/DD HH:MM:SS.SSSS ±UUUU",

@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from pyspc_write_jdx.data_records import StringDataRecord
 from pyspc_write_jdx.jdx import CompoundJDX, SimpleJDX
 
 
@@ -20,6 +21,20 @@ class SimpleJDXTestCase(TestCase):
         self.assertEqual(jdx.npoints.value, 3)
         self.assertEqual(jdx.xfactor.value, 1)
         self.assertEqual(jdx.yfactor.value, 1)
+
+    def test_custom_output_data_records(self):
+        # Create custom class
+        class CustomSimpleJDX(SimpleJDX):
+            my_custom_record = StringDataRecord(
+                "$MY CUSTOM RECORD", choices=["A", "B"], required=True
+            )
+
+        # Validate the order of the data records
+        jdx = CustomSimpleJDX(
+            title="title", my_custom_record="A", xypoints=[[1, 2], [3, 4]]
+        )
+        self.assertEqual(jdx._all_data_records()[0], "title")
+        self.assertEqual(jdx._all_data_records()[-1], "my_custom_record")
 
     def test_output_string(self):
         jdx = SimpleJDX(
